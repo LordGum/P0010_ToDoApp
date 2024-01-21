@@ -1,5 +1,6 @@
 package com.example.todo.presentation.add_item_package
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.todo.R
 import com.example.todo.databinding.FragmentAddToDoItemBinding
 import com.example.todo.domain.entities.ToDoItem
+import com.example.todo.presentation.ToDoApplication
+import com.example.todo.presentation.ViewModelFactory
+import javax.inject.Inject
 
 class AddToDoItemFragment : Fragment() {
 
@@ -23,6 +27,18 @@ class AddToDoItemFragment : Fragment() {
 
     private var screenMode: String = MODE_UNKNOWN
     private var itemId: Int = ToDoItem.UNDEFINED_ID
+
+    @Inject
+    lateinit var  viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as ToDoApplication).component
+    }
+
+    override fun onAttach(activity: Activity) {
+        component.inject(this)
+        super.onAttach(activity)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +55,7 @@ class AddToDoItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[AddItemViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[AddItemViewModel::class.java]
         launchRightMode()
         observeViewModel()
     }

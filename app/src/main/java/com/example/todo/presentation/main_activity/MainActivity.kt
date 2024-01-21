@@ -10,9 +10,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo.R
 import com.example.todo.databinding.ActivityMainBinding
+import com.example.todo.presentation.ToDoApplication
+import com.example.todo.presentation.ViewModelFactory
 import com.example.todo.presentation.adapter.ToDoAdapter
 import com.example.todo.presentation.add_item_package.AddToDoActivity
 import com.example.todo.presentation.add_item_package.AddToDoItemFragment
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), AddToDoItemFragment.OnEditingFinishedListener {
 
@@ -22,13 +25,22 @@ class MainActivity : AppCompatActivity(), AddToDoItemFragment.OnEditingFinishedL
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (application as ToDoApplication).component
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
+
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         setupRV()
 
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
         viewModel.itemList.observe(this) {
             toDoListAdapter.submitList(it)
         }

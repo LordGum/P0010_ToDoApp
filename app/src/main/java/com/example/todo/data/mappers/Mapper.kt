@@ -2,8 +2,9 @@ package com.example.todo.data.mappers
 
 import com.example.todo.data.database.model.ToDoItemDbModel
 import com.example.todo.domain.entities.ToDoItem
+import javax.inject.Inject
 
-class Mapper {
+class Mapper @Inject constructor() {
     fun mapDbModelToEntity(item: ToDoItemDbModel) = ToDoItem(
         item.id,
         item.done,

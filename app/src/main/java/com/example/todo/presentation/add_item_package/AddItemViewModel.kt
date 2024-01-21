@@ -1,10 +1,8 @@
 package com.example.todo.presentation.add_item_package
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.todo.data.RepositoryImpl
+import androidx.lifecycle.ViewModel
 import com.example.todo.domain.entities.ToDoItem
 import com.example.todo.domain.usecases.AddToDoItemUseCase
 import com.example.todo.domain.usecases.GetToDoItemUseCase
@@ -12,13 +10,13 @@ import com.example.todo.domain.usecases.RefactorToDoItemUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddItemViewModel(application: Application): AndroidViewModel(application) {
-    private val repository = RepositoryImpl(application)
-
-    private val addToDoItemUseCase = AddToDoItemUseCase(repository)
-    private val getToDoItemUseCase = GetToDoItemUseCase(repository)
-    private val refactorToDoItemUseCase = RefactorToDoItemUseCase(repository)
+class AddItemViewModel @Inject constructor(
+    private val addToDoItemUseCase: AddToDoItemUseCase,
+    private val getToDoItemUseCase: GetToDoItemUseCase,
+    private val refactorToDoItemUseCase: RefactorToDoItemUseCase
+): ViewModel() {
 
     private val scope = CoroutineScope(Dispatchers.IO)
 

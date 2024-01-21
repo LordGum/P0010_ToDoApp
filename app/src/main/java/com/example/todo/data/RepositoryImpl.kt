@@ -1,19 +1,17 @@
 package com.example.todo.data
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import com.example.todo.data.database.AppDatabase
+import com.example.todo.data.database.ToDoDao
 import com.example.todo.data.mappers.Mapper
 import com.example.todo.domain.Repository
 import com.example.todo.domain.entities.ToDoItem
+import javax.inject.Inject
 
-class RepositoryImpl(
-    application: Application
+class RepositoryImpl @Inject constructor(
+    private val mapper: Mapper,
+    private val toDoDao: ToDoDao
 ): Repository {
-
-    private val toDoDao = AppDatabase.getInstance(application).toDoDao()
-    private val mapper = Mapper()
 
     override suspend fun addToDoItem(item: ToDoItem) {
         toDoDao.addToDoItem(mapper.mapEntityToDbModel(item))
