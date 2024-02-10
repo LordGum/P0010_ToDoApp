@@ -7,9 +7,10 @@
     tools:context=".presentation.main_activity.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rw"
+        android:id="@+id/rv"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guideline_middle"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +44,7 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rw"
+        app:layout_constraintStart_toEndOf="@+id/rv"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

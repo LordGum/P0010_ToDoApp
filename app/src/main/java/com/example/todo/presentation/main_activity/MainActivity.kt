@@ -21,9 +21,8 @@ class MainActivity : AppCompatActivity(), AddToDoItemFragment.OnEditingFinishedL
 
     private lateinit var viewModel: MainViewModel
     private lateinit var toDoListAdapter: ToDoAdapter
-    private val binding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
+    private lateinit var binding: ActivityMainBinding
+
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -33,11 +32,10 @@ class MainActivity : AppCompatActivity(), AddToDoItemFragment.OnEditingFinishedL
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        component.inject(this)
-
         super.onCreate(savedInstanceState)
+        component.inject(this)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setupRV()
 
         viewModel = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
